@@ -1,35 +1,62 @@
-var hr, mn, sec,c,d;
-hr = hour();
-mn = minute();
-sec = seccond();
+var hr, mn, sec;
+var hrAngle, mnAngle, scAngle;
 
 function setup() {
-  createCanvas(800,400);
+  createCanvas(400,400);
   //createSprite(400, 200, 50, 50);
+  angleMode(DEGREES);
 }
 
 function draw() {
-  background(255,255,255);  
+  background(0); 
+  
+   translate(200,200)
+   rotate(-90)
 
+  //Calculating time using predefined func from p5.js
+  hr = hour();
+  mn = minute();
+  sc = second();
+  
+  
+   scAngle = map(sc, 0, 60, 0, 360);
+   mnAngle = map(mn,0,60,0,360);
+   hrAngle = map(hr % 12,0,12,0,360);
+  
+  //drawing seconds hand
   push();
-rotate(scAngle);
+  rotate(scAngle);
   stroke(255,0,0);
   strokeWeight(7);
   line(0,0,100,0);
   pop();
 
-  text('Current second: ' + sec, 5, 50);
-  angleMode(DEGREES);
+  //drawing mins hand
+    push();
+    rotate(mnAngle);
+    stroke(0,255,0);
+    strokeWeight(7);
+    line(0,0,75,0);
+    pop()
 
-  text('Current minute: ' + mn, 5, 80);
-
-  text('Current hour: ' + hr, 5, 110);
-
-   c = map(mouseX, 0, width, 0, 175);
+    //drawing hr hand
+    push();
+    rotate(hrAngle);
+    stroke(0,0,255);
+    strokeWeight(7);
+    line(0,0,50,0);
+    pop();
   
-   d = map(mouseX, 0, width, 40, 300);
-  fill(255, c, 0);
-  ellipse(width/2, height/2, d, d);
-
-  drawSprites();
+  //drawing the arcs
+    strokeWeight(10);
+    noFill();
+    //Seconds
+    stroke(255,0,0);
+    arc(0,0,300,300,0,scAngle);
+    //Minutes
+    stroke(0,255,0);
+    arc(0,0,280,280,0,mnAngle);
+    //Hour
+    stroke(0,0,255);
+    arc(0,0,260,260,0,hrAngle);
 }
